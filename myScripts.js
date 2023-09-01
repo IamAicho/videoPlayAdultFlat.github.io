@@ -240,17 +240,17 @@ presentationRequest.addEventListener('connectionavailable', function (event) {
 
         // 判斷該播放的聲音方向
         let videoName = event.data;
-        if (videoName.includes("D")) {
-            console.log(videoName);
+        if (videoName.includes("LD")) {
+            console.log('D');
             ldSpeaker();
-        } else if (videoName.includes("L")) {
-            console.log(videoName);
+        } else if (videoName.includes("LU")) {
+            console.log('L');
             luSpeaker();
-        } else if (videoName.includes("R")) {
-            console.log(videoName);
+        } else if (videoName.includes("RD")) {
+            console.log('R');
             rdSpeaker();
-        } else if (videoName.includes("U")) {
-            console.log(videoName);
+        } else if (videoName.includes("RU")) {
+            console.log('U');
             ruSpeaker();
         } else {
             console.log(videoName);
