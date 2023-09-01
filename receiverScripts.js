@@ -108,9 +108,10 @@ function addConnection(connection) {
                     currentVideoName = 'RU';
                     console.log(currentVideoName);
                 }
-                connection.send('Played: ' + currentVideoName);
+                
                 videoPlayer.load();
                 videoPlayer.play();
+                connection.send('Played: ' + currentVideoName);
             }
 
             // 影片播放結束事件
@@ -138,9 +139,10 @@ function addConnection(connection) {
                         currentVideoName = 'RU';
                         console.log(currentVideoName);
                     }
-                    connection.send('Played: ' + currentVideoName);
+                    
                     videoPlayer.load();
                     videoPlayer.play();
+                    connection.send('Played: ' + currentVideoName);
                 } else {
                     // 所有影檔播放完畢，將索引歸零並重新整理播放順序
                     connection.send('Stop playing!!');
