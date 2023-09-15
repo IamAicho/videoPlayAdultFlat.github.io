@@ -1,15 +1,31 @@
 section {
     float: left;
-    width: 30%;
+    width: 50%;
 }
 
 aside {
     float: right;
-    width: 70%;
+    width: 50%;
 }
 
 h3 {
     margin: 10px;
+}
+
+button {
+    width:150px;
+    height:30px;
+    border: 0;
+    background-color: #003C9D;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #003C9D;
+    background-color: #fff;
+    border: 2px #003C9D solid;
 }
 
 .output {
