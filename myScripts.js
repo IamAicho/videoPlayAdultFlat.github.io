@@ -25,51 +25,6 @@ updateTime(); // Start updating time on page load
 
 
 
-//---------------------------BLE 連接 ESP32_JY901------------------------------
-// 獲取頁面元素
-const connectButton = document.getElementById('connectButton');
-const dataDisplayJY901 = document.getElementById('dataDisplayJY901');
-const saveButton = document.getElementById('saveButton'); // 添加保存按钮
-saveButton.disabled = true;
-
-var servJY901_uuid = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'.toLowerCase();
-var charJY901_uuid = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'.toLowerCase();
-
-let bluetoothDevice;
-let characteristicJY901;
-let receivedData = ''; // 用于存储接收到的数据
-
-// 连接蓝牙设备
-document.addEventListener('DOMContentLoaded', function () { // 原生 JavaScript 寫法
-    // 在這裡放置你的程式碼，確保它在 DOM 載入完畢後執行
-    connectButton.addEventListener('click', async () => {
-        try {
-            bluetoothDevice = await navigator.bluetooth.requestDevice({
-                filters: [{ namePrefix: 'ESP32_BLE_JY901' }],
-                optionalServices: [servJY901_uuid]
-            });
-            console.log('Connecting to Bluetooth Device...(JY901)');
-            const server = await bluetoothDevice.gatt.connect();
-            const service = await server.getPrimaryService(servJY901_uuid);
-            characteristicJY901 = await service.getCharacteristic(charJY901_uuid);
-
-            connectButton.disabled = true;
-            dataDisplayJY901.innerHTML = '連接成功！等待數據...';
-            saveButton.disabled = false;
-            console.log('Connected to ESP32_JY901.');
-
-            // 监听特征值变化
-            characteristicJY901.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
-            await characteristicJY901.startNotifications();
-        } catch (error) {
-            console.error('Error connecting to ESP32_JY901!!', error);
-            dataDisplayJY901.innerHTML = '請再連接一次！';
-        }
-    });
-});
-
-
-
 //----------------------------BLE 連接 ESP32_Audio-------------------------------
 const scanButton = document.getElementById('scanButton');
 const dataDisplayScan = document.getElementById('dataDisplayScan');
@@ -105,6 +60,54 @@ document.addEventListener('DOMContentLoaded', function () {
             dataDisplayScan.innerHTML = '請再掃描一次！';
         }
     }
+});
+
+
+
+//---------------------------BLE 連接 ESP32_JY901------------------------------
+// 獲取頁面元素
+const connectButton = document.getElementById('connectButton');
+const dataDisplayJY901 = document.getElementById('dataDisplayJY901');
+const saveButton = document.getElementById('saveButton'); // 添加保存按钮
+const exportButton = document.getElementById('exportButton'); // 添加匯出音源播放時間按鈕
+saveButton.disabled = true;
+exportButton.disabled = true;
+
+var servJY901_uuid = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'.toLowerCase();
+var charJY901_uuid = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'.toLowerCase();
+
+let bluetoothDevice;
+let characteristicJY901;
+let receivedData = ''; // 用于存储接收到的数据
+
+// 连接蓝牙设备
+document.addEventListener('DOMContentLoaded', function () { // 原生 JavaScript 寫法
+    // 在這裡放置你的程式碼，確保它在 DOM 載入完畢後執行
+    connectButton.addEventListener('click', async () => {
+        try {
+            bluetoothDevice = await navigator.bluetooth.requestDevice({
+                filters: [{ namePrefix: 'ESP32_BLE_JY901' }],
+                optionalServices: [servJY901_uuid]
+            });
+            console.log('Connecting to Bluetooth Device...(JY901)');
+            const server = await bluetoothDevice.gatt.connect();
+            const service = await server.getPrimaryService(servJY901_uuid);
+            characteristicJY901 = await service.getCharacteristic(charJY901_uuid);
+
+            connectButton.disabled = true;
+            dataDisplayJY901.innerHTML = '連接成功！等待數據...';
+            saveButton.disabled = false;
+            exportButton.disabled = false;
+            console.log('Connected to ESP32_JY901.');
+
+            // 监听特征值变化
+            characteristicJY901.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
+            await characteristicJY901.startNotifications();
+        } catch (error) {
+            console.error('Error connecting to ESP32_JY901!!', error);
+            dataDisplayJY901.innerHTML = '請再連接一次！';
+        }
+    });
 });
 
 
@@ -151,7 +154,7 @@ saveButton.addEventListener('click', () => {
 
 
 //----------------------------------匯出影檔播放的時間----------------------------------------
-document.getElementById('exportButton').addEventListener('click', function () {
+exportButton.addEventListener('click', function () {
     var contentElement = document.getElementById('logContainer');
     var paragraphElements = contentElement.querySelectorAll('p');
 
