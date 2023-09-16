@@ -326,27 +326,27 @@ document.querySelector('#terminate').addEventListener('click', function () {
     console.log('Terminating connection...');
     presentationConnection.terminate();
 });
-// "close" 按鈕的點擊事件。
-document.querySelector('#close').addEventListener('click', function () {
-    console.log('Closing connection...');
-    presentationConnection.close();
-});
-// "reconnect" 按鈕的點擊事件。
-document.querySelector('#reconnect').addEventListener('click', () => {
-    // 從輸入框獲取要重新連接的展示的 ID。
-    const presentationId = document.querySelector('#presentationId').value.trim();
+// // "close" 按鈕的點擊事件。
+// document.querySelector('#close').addEventListener('click', function () {
+//     console.log('Closing connection...');
+//     presentationConnection.close();
+// });
+// // "reconnect" 按鈕的點擊事件。
+// document.querySelector('#reconnect').addEventListener('click', () => {
+//     // 從輸入框獲取要重新連接的展示的 ID。
+//     const presentationId = document.querySelector('#presentationId').value.trim();
 
-    // 重新連接到指定的展示，並在成功時獲得新的展示連接。
-    presentationRequest.reconnect(presentationId)
-        .then(connection => {
-            console.log('Reconnected to ' + connection.id);
-            log('Reconnected to ' + connection.id);
-        })
-        .catch(error => {
-            console.log('Presentation.reconnect() error, ' + error.name + ': ' + error.message);
-            log('Reconnect failed. Please enter the ID.');
-        });
-});
+//     // 重新連接到指定的展示，並在成功時獲得新的展示連接。
+//     presentationRequest.reconnect(presentationId)
+//         .then(connection => {
+//             console.log('Reconnected to ' + connection.id);
+//             log('Reconnected to ' + connection.id);
+//         })
+//         .catch(error => {
+//             console.log('Presentation.reconnect() error, ' + error.name + ': ' + error.message);
+//             log('Reconnect failed. Please enter the ID.');
+//         });
+// });
 
 // "playButton" 按鈕的點擊事件。
 document.querySelector('#playVideo').addEventListener('click', function () {
